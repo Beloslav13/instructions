@@ -1,0 +1,37 @@
+# Первым делом обновите существующий список пакетов:
+sudo apt update
+
+# Затем установите несколько необходимых пакетов, которые позволяют apt использовать пакеты через HTTPS:
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+
+# Добавьте ключ GPG для официального репозитория Docker в вашу систему:
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# Добавьте репозиторий Docker в источники APT:
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+
+# Потом обновите базу данных пакетов и добавьте в нее пакеты Docker из недавно добавленного репозитория:
+sudo apt update
+
+# Убедитесь, что установка будет выполняться из репозитория Docker, а не из репозитория Ubuntu по умолчанию:
+apt-cache policy docker-ce
+
+# Установите Docker:
+sudo apt install docker-ce
+
+# Docker должен быть установлен, демон-процесс запущен, а для процесса активирован запуск при загрузке. Проверьте, что он запущен:
+sudo systemctl status docker
+
+# Если вы не хотите каждый раз вводить sudo при запуске команды docker, добавьте свое имя пользователя в группу docker:
+sudo usermod -aG docker ${USER}
+
+# Чтобы применить добавление нового члена группы, выйдите и войдите на сервер или введите следующее:
+su - ${USER}
+
+
+# Установка docker-compose. Проверить последнюю версию https://github.com/docker/compose/releases
+sudo curl -L "https://github.com/docker/compose/releases/download/<version>/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+# Затем необходимо задать правильные разрешения, чтобы сделать команду docker-compose исполняемой:
+sudo chmod +x /usr/local/bin/docker-compose
+# Чтобы проверить успешность установки, запустите следующую команду:
+docker-compose --version
