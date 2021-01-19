@@ -1,0 +1,12 @@
+# Для того чтобы создать переводы сторонних пакетов необходимо:
+# в корне проекта создать к примеру папку build/translations/<app>/locale
+# в settings.py прописать пути
+LOCALE_PATHS = [
+    os.path.join('build', 'translations', 'django_celery_results', 'locale'),
+    os.path.join('build', 'translations', 'django_celery_beat', 'locale'),
+]
+# создать символические ссылки на эти пакеты
+ln -s /usr/local/lib/python3.8/site-packages/django_celery_results ./
+# и запустить перевод по ссылкам
+python manage.py makemessages -l ru -s
+
