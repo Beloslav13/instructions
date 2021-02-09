@@ -1,0 +1,39 @@
+# Вставка (добавление) данных в таблицу
+INSERT INTO courses (name, slug, lessons_count, body)
+  VALUES ('basics of programming', 'basics', 10, 'this is theory');
+
+# INSERT позволяет вставить сразу несколько записей в рамках одного запроса:
+INSERT INTO courses (name, slug) VALUES
+  ('Bash', 'bash'), ('PHP', 'php'), ('Ruby', 'ruby');
+
+# Обновление (изменение) данных
+UPDATE courses SET body = 'updated!' WHERE slug = 'bash';
+# Обычно UPDATE запрос состоит из двух частей. В первой (там, где SET) описывается какое значение установить в какое поле. Во второй (той, что идёт после WHERE) указывается ограничение на то,
+# к каким строкам применить обновление.
+
+# За одну операцию можно обновить несколько полей. Для этого достаточно перечислить каждое присваивание через запятую в части SET. Порядок в котором изменяются поля — не важен:
+UPDATE courses SET body = 'updated!', name = 'Bash' WHERE slug = 'bash';
+
+# Операции сравнения
+UPDATE courses SET name = 'new name' WHERE lessons_count > 3;
+UPDATE courses SET name = 'another new name' WHERE lessons_count < 2;
+
+# Логические операции
+-- И
+UPDATE courses SET name = 'new name'
+  WHERE slug = 'bash' AND lessons_count > 3;
+
+-- ИЛИ
+UPDATE courses SET name = 'another new name'
+  WHERE lessons_count < 2 OR lessons_count > 8;
+
+
+# Удаление данных
+DELETE FROM courses WHERE slug = 'bash';
+
+# В базах данных есть ещё один способ удалять данные в таблице — TRUNCATE. Он не является частью стандарта, но реализован большинством баз данных. У него две особенности:
+#	 1. Он предназначен для полной очистки таблиц.
+#	 2. В отличие от DELETE, он выполняется очень эффективно так как у TRUNCATE нет возможности задавать условия, а значит СУБД не нужно ничего дополнительно анализировать.
+#	 Она сразу очищает место на диске минуя все промежуточные этапы.
+TRUNCATE courses;
+
