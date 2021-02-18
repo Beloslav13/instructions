@@ -34,3 +34,33 @@ class InterfaceImpl(Interface):
 
 	def method(self):
 		print(self.prop)
+
+
+# Еще пример
+class Dob(ABC):
+	"""
+	Интрефейс `собака`
+	Поле интерфейса "имя собаки" задано как абстрактное свойство, а не через конструктор __init__(self,name)
+	"""
+
+	@property
+	@abstractmethod
+	def name(self) -> str:
+		pass
+
+	@abstractmethod
+	def bark(self) -> None:
+		pass
+
+
+class BullDog(Dob):
+
+	def __init__(self, name: str):
+		self._name = name
+
+	@property
+	def name(self):
+		return self._name
+
+	def bark(self):
+		print(f'{self.__class__.__name__} {self.name} говорит гав.')
