@@ -7,11 +7,12 @@ Single Responsibility Principle
 
 """
 
+
 # Не правильный подход. У класса несколько обязанностей.
 class Animal:
     def __init__(self, name: str):
         self.name = name
-    
+
     def get_name(self) -> str:
         pass
 
@@ -19,12 +20,11 @@ class Animal:
         pass
 
 
-
 # Правильный пример. Разделили обязанности класса.
 class Animal:
     def __init__(self, name: str):
-            self.name = name
-    
+        self.name = name
+
     def get_name(self):
         pass
 
@@ -42,6 +42,7 @@ Open Close Principle
 Программные объекты (классы, модули, функции) должны быть открыты для расширения и закрыты для модификации.
 """
 
+
 # Не правильноый подход.
 
 class Discount:
@@ -51,10 +52,10 @@ class Discount:
         self.price = price
 
     def give_discount(self):
-            if self.customer == 'fav':
-                return self.price * 0.2
-            if self.customer == 'vip':
-                return self.price * 0.4
+        if self.customer == 'fav':
+            return self.price * 0.2
+        if self.customer == 'vip':
+            return self.price * 0.4
 
 
 # Правильный подход, один из способов.
@@ -68,17 +69,15 @@ class Discount(ABC):
         self.customer = customer
         self.price = price
 
-
     @abstractmethod
     def give_discount(self):
-    	pass
+        pass
 
 
 class VIPDiscount(Discount):
 
-	def give_discount(self):
-		return self.price * 0.2
-
+    def give_discount(self):
+        return self.price * 0.2
 
 
 class SuperVIPDiscount(VIPDiscount):
