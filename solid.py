@@ -147,3 +147,93 @@ class Mouse(Animal):
 
 animals = [Lion, Mouse, ]
 animal_leg_count(animals)
+
+
+"""
+Interface Segregation Principle
+Создавайте мелкозернистые интерфейсы, ориентированные на клиента
+Клиенты не должны зависеть от интерфейсов, которые они не используют.
+Этот принцип устраняет недостатки реализации больших интерфейсов.
+"""
+
+
+# Не правильный подход к созданию интерфейса
+class IShape:
+    def draw_square(self):
+        raise NotImplementedError
+
+    def draw_rectangle(self):
+        raise NotImplementedError
+
+    def draw_circle(self):
+        raise NotImplementedError
+
+
+# Фигуры должны реализовать не нужный метод.
+class Circle(IShape):
+    def draw_square(self):
+        pass
+
+    def draw_rectangle(self):
+        pass
+
+    def draw_circle(self):
+        pass
+
+
+class Square(IShape):
+    def draw_square(self):
+        pass
+
+    def draw_rectangle(self):
+        pass
+
+    def draw_circle(self):
+        pass
+
+
+class Rectangle(IShape):
+    def draw_square(self):
+        pass
+
+    def draw_rectangle(self):
+        pass
+
+    def draw_circle(self):
+        pass
+
+
+# А если добавим новый метод в интерфейс, то все классы должны добавить к себе это метод.
+class IShape:
+    def draw_square(self):
+        raise NotImplementedError
+
+    def draw_rectangle(self):
+        raise NotImplementedError
+
+    def draw_circle(self):
+        raise NotImplementedError
+
+    def draw_triangle(self):
+        raise NotImplementedError
+
+
+# Пример правильного одного из подходовю
+class IShape:
+    def draw(self):
+        raise NotImplementedError
+
+
+class Circle(IShape):
+    def draw(self):
+        pass
+
+
+class Square(IShape):
+    def draw(self):
+        pass
+
+
+class Rectangle(IShape):
+    def draw(self):
+        pass
