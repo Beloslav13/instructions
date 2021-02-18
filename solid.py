@@ -237,3 +237,77 @@ class Square(IShape):
 class Rectangle(IShape):
     def draw(self):
         pass
+
+
+"""
+Dependency Inversion Principle
+Зависимость должна быть от абстракций, а не от деталей
+A. Модули высокого уровня не должны зависеть от модулей низкого уровня. Оба должны зависеть от абстракций.
+Б. Абстракции не должны зависеть от деталей. Детали должны зависеть от абстракций.
+"""
+
+
+# Неправильный подход.
+class Gmail:
+    """
+    Класс нижнего уровня
+    """
+
+    def send(self, email, body):
+        print(f'Отправляю письмо "{email}" с телом {body}')
+
+
+class Notifier:
+    """
+    Класс верхнего уровня
+    """
+
+    def __init__(self):
+        self.gmail = Gmail()
+
+    def notify(self, email, body):
+        self.gmail.send(email, body)
+
+# Если класс Gmail перестает работать, все падает и нужно вносить правки.
+
+
+class Mailer(ABC):
+    """
+    Интерфейс рассылки электронной почти.
+    """
+
+    @abstractmethod
+    def send(self, email, body):
+        pass
+
+
+class Gmail(Mailer):
+    """
+    Класс нижнего уровня реализует интерфейс
+    """
+
+    def send(self, email, body):
+        print(f'Отправляю письмо "{email}" с телом {body}')
+
+
+class MocMailer(Mailer):
+    """
+    Класс-мок для тестирвоания
+    """
+
+    def send(self, email, body):
+        print(f'Эмулирую отправку письма "{email}" с телом {body}')
+
+
+class Notifier:
+    """
+    Класс верхнего уровня (бизнес-логики) инвертировал зависимость через интерфес.
+    Теперь он зависит от абстракции Mailer, а не от конткретной реализации Gmail.
+    """
+
+    def __init__(self, mailer: Mailer):
+        self.mailer = mailer
+
+    def notify(self, email, body):
+        self.mailer.send(email, body)
+
