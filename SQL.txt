@@ -72,3 +72,33 @@ SELECT * FROM users ORDER BY birthday DESC;
 -- Такой первичный ключ называется суррогатным и поддерживается любой базой данных "из коробки".
 -- Иногда это просто числа, а иногда и сложные число-буквенные строки (хеши). Например PRIMARY KEY - id.
 
+-- Первичный ключ принято создавать первым полем с названием id. Для первичного ключа обязательно указывать PRIMARY KEY в описании таблицы:
+-- Первичный ключ только один на таблицу
+CREATE TABLE products (
+    id bigint PRIMARY KEY,
+    first_name varchar(255),
+    last_name varchar(255),
+    address varchar(255),
+    item varchar(255),
+    price numeric -- специальный тип данных, подходящий под работу с деньгами. Обеспечивает высокую точность при расчетах.
+);
+-- Такой ключ все еще нужно формировать самостоятельно (с автогенерацией мы познакомимся позже),
+-- но теперь база данных сама следит за уникальностью. При попытке создать запись с повторяющимися первичными ключами возникнет ошибка.
+
+CREATE TABLE users (
+	id bigint NOT NULL PRIMARY KEY,
+	first_name varchar(255),
+	created_at timestamp
+);
+
+INSERT INTO users (id, first_name, created_at) VALUES (1, 'Vladislav', '2020-02-24');
+
+CREATE TABLE orders (
+	id bigint NOT NULL PRIMARY KEY,
+	user_first_name varchar(255),
+	months int,
+	created_at timestamp
+);
+
+INSERT INTO orders (id, user_first_name, months, created_at) VALUES (1, 'Vladislav', 7, '2020-02-24');
+INSERT INTO orders (id, user_first_name, months, created_at) VALUES (2, 'Vladislav', 3, '2020-02-25');
