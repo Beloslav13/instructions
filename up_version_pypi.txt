@@ -1,0 +1,25 @@
+1 шаг:
+python3 -m pip install --upgrade build
+
+2 шаг из корня проекта(где README.md):
+python3 -m build
+Если вылетает ошибка "The virtual environment was not created successfully because ensurepip is not
+available.  On Debian/Ubuntu systems, you need to install the python3-venv
+package using the following command."
+Необходимо установить (apt-get install python3-venv).
+
+3 шаг:
+Необходимо создать ТОКЕН проектов Pypi если он не создан в файле $HOME/.pypirc
+To use this API token:
+
+Set your username to __token__
+Set your password to the token value, including the pypi- prefix
+For example, if you are using Twine to upload your projects to PyPI, set up your $HOME/.pypirc file like this:
+
+[pypi]
+  username = __token__
+  password = pypi-AgEIcHlwaS5vcmcCJGZiMzQ3MzE5LTg2ODItNDQxZS1hOTM0LTJiMzA0NzYzYzNiMgACJXsicGVybWlzc2lvbnMiOiAidXNlci
+
+4 шаг:
+python3 -m pip install --user --upgrade twine
+python3 -m twine upload dist/*
